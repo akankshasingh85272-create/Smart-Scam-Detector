@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function History() {
@@ -13,7 +13,7 @@ function History() {
   return (
     <div className="history-page">
       <h2>Scan History</h2>
-       {scans.length === 0 ? (
+      {scans.length === 0 ? (
         <p>No scans yet.</p>
       ) : (
         <table>

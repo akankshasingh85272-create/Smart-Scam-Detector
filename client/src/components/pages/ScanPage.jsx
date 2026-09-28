@@ -3,10 +3,10 @@ import axios from 'axios';
 
 function ScanPage() {
   const [message, setMessage] = useState('');
-  const [result, setResult ] = useState(null);
+  const [result, setResult] = useState(null);
 
   const handleScan = async () => {
-     if (message.trim() === '') return;
+    if (message.trim() === '') return;
     try {
       const res = await axios.post('http://localhost:5000/api/scan', { text: message });
       setResult(res.data);
@@ -25,15 +25,15 @@ function ScanPage() {
       />
       <button onClick={handleScan}>Scan</button>
 
-       {result && (
+      {result && (
         <div className="result-card">
           <h3>Result: {result.verdict}</h3>
           <p>Confidence: {result.confidence}%</p>
           <p>Reason: {result.reason}</p>
         </div>
       )}
-
     </div>
   );
 }
+
 export default ScanPage;
