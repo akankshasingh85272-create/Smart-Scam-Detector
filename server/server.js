@@ -16,6 +16,10 @@ app.use('/api/auth', authRoutes);
 const scanRoutes = require('./routes/scan');
 app.use('/api/scan', scanRoutes);
 
+const reportRoutes = require('./routes/report');
+app.use('/api/report', reportRoutes);
+
+
 // Test route
 app.get('/', (req, res) => {
   res.send('Server is running');

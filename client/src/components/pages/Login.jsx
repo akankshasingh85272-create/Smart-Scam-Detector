@@ -1,10 +1,12 @@
 import { useState } from "react";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail ] = useState('');
   const [password, setPassword ] = useState('');
   const [message, setMessage ] = useState('');
+   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -12,11 +14,11 @@ function Login() {
         email,
         password,
       });
+      localStorage.setItem('token', res.data.token);
       setMessage('Login successful!');
-      console.log(res.data);
+      navigate('/scan');
     } catch (err) {
       setMessage(err.response?.data?.message || 'Something went wrong');
-      console.log(err);
     }
   };
 
