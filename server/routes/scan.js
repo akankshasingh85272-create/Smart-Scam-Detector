@@ -1,19 +1,20 @@
 const express = require('express');
+const axios = require('axios');
 const Scan = require('../models/Scan');
 
 const router = express.Router();
-
 router.post('/', async (req, res) => {
     try {
         const { text } = req.body;
-     // Abhi ke liye dummy logic — baad mein ML API call yahan aayega
-    const isScam = text.toLowerCase().includes('otp') || text.toLowerCase().includes('kyc');
+    const mlResponse = await axios.post('http://127.0.0.1:8000/predict', { text });
+    const { verdict, confidence } = mlResponse.data;
+
 
     const scan = new Scan({
       text,
-      verdict: isScam ? 'Scam' : 'Safe',
-      confidence: isScam ? 92 : 85,
-      reason: isScam ? 'Contains suspicious keywords like OTP or KYC' : 'No suspicious patterns found',
+      verdict,
+      confidence,
+      reason: verdict === 'Scam' ? 'Flagged by ML model based on message patterns' : 'No scam indicators found',
     });
 
     await scan.save();
