@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 function ReportPage() {
     const [ text, setText] = useState('');
@@ -9,7 +10,7 @@ function ReportPage() {
     const handleReport = async () => {
     if (text.trim() === '') return;
     try {
-        await axios.post('https://localhost:5000/api/report', { text, reportedAs });
+        await axios.post(`${API_URL}/api/auth/report`, { text, reportedAs });
         setMessage('Thank you! Your report has been submitted.');
         setText('');
     } catch (err) {

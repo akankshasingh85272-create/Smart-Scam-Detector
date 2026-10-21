@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 function History() {
   const [scans, setScans] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/scan')
+    axios.get(`${API_URL}/api/auth/history`)
       .then((res) => setScans(res.data))
       .catch((err) => console.log(err));
   }, []);

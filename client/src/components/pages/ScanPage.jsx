@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 function ScanPage() {
   const [scanType, setScanType] = useState('message'); // 'message' or 'url'
@@ -10,8 +11,8 @@ function ScanPage() {
     if (input.trim() === '') return;
     try {
       const endpoint = scanType === 'message'
-        ? 'http://localhost:5000/api/scan'
-        : 'http://localhost:5000/api/scan/url';
+        ? axios.post(`${API_URL}/api/auth/scan`,)
+        : axios.post(`${API_URL}/api/auth/scan`);
 
       const payload = scanType === 'message'
         ? { text: input }
