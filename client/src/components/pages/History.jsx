@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 function History() {
-  const [scans] = useState([]);
-   
-   useEffect(() => {
-    axios.get('http://localhost:5000/api/scan')
+  const [scans, setScans] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${API_URL}/api/auth/history`)
       .then((res) => setScans(res.data))
       .catch((err) => console.log(err));
   }, []);
-
 
   return (
     <div className="history-page">
@@ -21,16 +21,18 @@ function History() {
           <thead>
             <tr>
               <th>Message</th>
+              <th>Reason</th>
               <th>Result</th>
               <th>Date</th>
             </tr>
           </thead>
           <tbody>
             {scans.map((scan) => (
-              <tr key={scan.id}>
+              <tr key={scan._id}>
                 <td>{scan.text}</td>
-                <td>{scan.result}</td>
-                <td>{scan.date}</td>
+                <td>{scan.verdict}</td>
+                <td>{scan.reason}</td>
+                <td>{new Date(scan.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>

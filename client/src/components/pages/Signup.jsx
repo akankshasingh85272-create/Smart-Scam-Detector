@@ -1,25 +1,28 @@
 import { useState } from "react";
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [success, setSuccess] = useState(false);
 
 
   const handleSignup = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/signup', {
+        const response = await axios.post(`${API_URL}/api/auth/signup`, {
         name,
         email,
         password,
       });
+
       setMessage('Signup successful!');
-      console.log(res.data);
-    } catch (err) {
+     setSuccess(true);
+      } catch (err) {
       setMessage(err.response?.data?.message || 'Something went wrong');
-      console.log(err);
+      setSuccess(false);
     }
   };
 
@@ -46,6 +49,7 @@ function Signup() {
       />
       <button onClick={handleSignup}>Signup</button>
       {message && <p>{message}</p>}
+       {success && <a href="/login"><button>Go to Login</button></a>}
     </div>
   );
 }

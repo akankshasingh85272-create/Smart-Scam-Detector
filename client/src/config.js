@@ -1,0 +1,1 @@
+export const API_URL = 'https://scam-detector-backend-m2hj.onrender.com';

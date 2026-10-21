@@ -1,19 +1,20 @@
 const express = require('express');
+const axios = require('axios');
 const Scan = require('../models/Scan');
 
 const router = express.Router();
-
 router.post('/', async (req, res) => {
     try {
         const { text } = req.body;
-     // Abhi ke liye dummy logic — baad mein ML API call yahan aayega
-    const isScam = text.toLowerCase().includes('otp') || text.toLowerCase().includes('kyc');
+    const mlResponse = await axios.post('https://scam-detector-ml.onrender.com/predict', { text });
+    const { verdict, confidence } = mlResponse.data;
+
 
     const scan = new Scan({
       text,
-      verdict: isScam ? 'Scam' : 'Safe',
-      confidence: isScam ? 92 : 85,
-      reason: isScam ? 'Contains suspicious keywords like OTP or KYC' : 'No suspicious patterns found',
+      verdict,
+      confidence,
+      reason: verdict === 'Scam' ? 'Flagged by ML model based on message patterns' : 'No scam indicators found',
     });
 
     await scan.save();
@@ -32,4 +33,24 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/url', async (req, res) => {
+  try {
+    const { url } = req.body;
+
+    const mlResponse = await axios.post('https://scam-detector-ml.onrender.com/predict-url', { url });
+    const { verdict, confidence } = mlResponse.data;
+
+    const scan = new Scan({
+      text: url,
+      verdict: verdict === 'Phishing' ? 'Scam' : 'Safe',
+      confidence,
+      reason: verdict === 'Phishing' ? 'Flagged by URL structure analysis' : 'No phishing indicators found',
+    });
+
+    await scan.save();
+    res.status(201).json(scan);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
 module.exports = router;
