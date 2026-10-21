@@ -11,8 +11,8 @@ function ScanPage() {
     if (input.trim() === '') return;
     try {
       const endpoint = scanType === 'message'
-        ? `${API_URL}/api/auth/scan-message`
-        : `${API_URL}/api/auth/scan-url`;
+        ? `${API_URL}/api/scan`
+        : `${API_URL}/api/scan/url`;
 
       const payload = scanType === 'message'
         ? { text: input }

@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/', async (req, res) => {
     try {
         const { text } = req.body;
-    const mlResponse = await axios.post('http://127.0.0.1:8000/predict', { text });
+    const mlResponse = await axios.post('https://scam-detector-ml.onrender.com/predict', { text });
     const { verdict, confidence } = mlResponse.data;
 
 
@@ -37,7 +37,7 @@ router.post('/url', async (req, res) => {
   try {
     const { url } = req.body;
 
-    const mlResponse = await axios.post('http://127.0.0.1:8000/predict-url', { url });
+    const mlResponse = await axios.post('https://scam-detector-ml.onrender.com/predict-url', { url });
     const { verdict, confidence } = mlResponse.data;
 
     const scan = new Scan({
