@@ -20,6 +20,7 @@ function History() {
           <thead>
             <tr>
               <th>Message</th>
+              <th>Reason</th>
               <th>Result</th>
               <th>Date</th>
             </tr>
@@ -29,6 +30,7 @@ function History() {
               <tr key={scan._id}>
                 <td>{scan.text}</td>
                 <td>{scan.verdict}</td>
+                <td>{scan.reason}</td>
                 <td>{new Date(scan.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
