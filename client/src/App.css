@@ -282,3 +282,22 @@ a:hover {
     transition-duration: 0.01ms !important;
   }
 }
+
+.scan-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.scan-toggle button {
+  padding: 8px 20px;
+  border: 1px solid #1E2761;
+  background: white;
+  color: #1E2761;
+  cursor: pointer;
+}
+
+.scan-toggle button.active {
+  background: #1E2761;
+  color: white;
+}

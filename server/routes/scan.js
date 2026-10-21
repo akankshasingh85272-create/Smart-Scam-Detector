@@ -33,4 +33,24 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/url', async (req, res) => {
+  try {
+    const { url } = req.body;
+
+    const mlResponse = await axios.post('http://127.0.0.1:8000/predict-url', { url });
+    const { verdict, confidence } = mlResponse.data;
+
+    const scan = new Scan({
+      text: url,
+      verdict: verdict === 'Phishing' ? 'Scam' : 'Safe',
+      confidence,
+      reason: verdict === 'Phishing' ? 'Flagged by URL structure analysis' : 'No phishing indicators found',
+    });
+
+    await scan.save();
+    res.status(201).json(scan);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
 module.exports = router;

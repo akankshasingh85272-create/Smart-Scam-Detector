@@ -8,6 +8,7 @@ function Navbar() {
                 <Link to="/scan">Scan</Link>
                 <Link to="/history">History</Link>
                 <Link to="/loginn">Login</Link>
+                <Link to="/report">Report</Link>
             </div>
         </nav>
     );
