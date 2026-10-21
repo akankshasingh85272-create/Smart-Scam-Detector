@@ -12,11 +12,12 @@ function Signup() {
 
   const handleSignup = async () => {
     try {
-       await axios.post(axios.post(`${API_URL}/api/auth/signup`), {
+        const response = await axios.post(`${API_URL}/api/auth/signup`, {
         name,
         email,
         password,
       });
+
       setMessage('Signup successful!');
      setSuccess(true);
       } catch (err) {
